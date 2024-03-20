@@ -37,9 +37,9 @@ def setup_logging():
             elif record.levelname == 'CRITICAL':
                 log_color = COLORS['FAIL'] + COLORS['BOLD']
             msg = super().format(record)
-            return f"{log_color}{msg}{COLORS['ENDC']}"
+            return f"{log_color}[function: {record.funcName}] {msg}{COLORS['ENDC']}"
 
-    formatter = ColoredFormatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    formatter = ColoredFormatter('%(asctime)s - %(message)s')
 
     # Add formatter to console handler
     console_handler.setFormatter(formatter)
@@ -49,15 +49,18 @@ def setup_logging():
 
     return logger
 
-def main():
+def main123():
     logger = setup_logging()
 
     # Logging examples
-    logger.debug('This is a debug message')
+    try:
+        x = 0/0
+    except Exception as e:
+        logger.debug(f'This is a debug message: {e}')
     logger.info('This is an info message')
     logger.warning('This is a warning message')
     logger.error('This is an error message')
     logger.critical('This is a critical message')
 
 if __name__ == "__main__":
-    main()
+    main123()
